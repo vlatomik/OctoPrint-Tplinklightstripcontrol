@@ -33,11 +33,7 @@ class TplinklightstripcontrolPlugin(
             getState=[]
         )
 
-    async def async_func(self):
-        await self.strip.update()
-
     def on_api_command(self, command, data):
-
         if command == "turnLEDOn":
             self.bStateRequested = data.get("parameter")
             self.bChangeState = True
@@ -57,8 +53,6 @@ class TplinklightstripcontrolPlugin(
     async def thread_function(self):
         while(self.bShouldUpdate):
             try:
-                await self.strip.update()
-
                 if (self.bChangeState):
                     self.bChangeState = False
                     await self.toggle_LED_strip(self.bStateRequested)
